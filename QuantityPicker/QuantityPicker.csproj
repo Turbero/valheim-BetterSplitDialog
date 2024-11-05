@@ -50,6 +50,10 @@
     <Reference Include="gui_framework">
       <HintPath>..\..\..\Libs\gui_framework.dll</HintPath>
     </Reference>
+    <Reference Include="Jotunn, Version=2.21.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\Jotunn.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -92,15 +96,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jotunn\JotunnUtils.cs" />
-    <Compile Include="QuantityPicker.cs" />
+    <Compile Include="Dialog\ExtraButtonsPatch.cs" />
+    <Compile Include="BetterSplitDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Jotunn\QuantityPickerJotunn.cs" />
-    <Compile Include="SplitStackTextInput\Configuration\ConfigurationManager.cs" />
-    <Compile Include="SplitStackTextInput\GameClasses\InventoryGUI.cs" />
-    <Compile Include="SplitStackTextInput\GameClasses\Slider.cs" />
-    <Compile Include="SplitStackTextInput\Helpers\SplitReceiver.cs" />
-    <Compile Include="SplitStackTextInput\Helpers\SplitReceiverInstance.cs" />
+    <Compile Include="Dialog\InputFieldPatch.cs" />
+    <Compile Include="ConfigurationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MODGEN\CHANGELOG.md" />
