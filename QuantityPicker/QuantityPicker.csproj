@@ -9,15 +9,16 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuantityPicker</RootNamespace>
     <AssemblyName>QuantityPicker</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\AppData\Roaming\Thunderstore Mod Manager\DataFolder\Valheim\profiles\Default\BepInEx\plugins\turbero-QuantityPicker\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,6 +47,9 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\Libs\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="gui_framework">
+      <HintPath>..\..\..\Libs\gui_framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,6 +76,14 @@
     <Reference Include="UnityEngine.InputModule">
       <HintPath>..\..\..\Libs\UnityEngine.InputModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\Libs\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -80,8 +92,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Jotunn\JotunnUtils.cs" />
     <Compile Include="QuantityPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Jotunn\QuantityPickerJotunn.cs" />
+    <Compile Include="SplitStackTextInput\Configuration\ConfigurationManager.cs" />
+    <Compile Include="SplitStackTextInput\GameClasses\InventoryGUI.cs" />
+    <Compile Include="SplitStackTextInput\GameClasses\Slider.cs" />
+    <Compile Include="SplitStackTextInput\Helpers\SplitReceiver.cs" />
+    <Compile Include="SplitStackTextInput\Helpers\SplitReceiverInstance.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MODGEN\CHANGELOG.md" />
+    <None Include="MODGEN\manifest.json" />
+    <None Include="MODGEN\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MODGEN\icon.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Release" (powershell Compress-Archive -Path '$(SolutionDir)MODGEN\*' -DestinationPath '$(SolutionDir)MODGEN\$(ProjectName).zip' -Force)
+if "$(ConfigurationName)" == "Debug" del "$(TargetPath).mdb"
+if "$(ConfigurationName)" == "Debug" "$(SolutionDir)..\pdb2mdb.exe" "$(TargetPath)"
+if "$(ConfigurationName)" == "Debug" del "$(SolutionDir)MODGEN\QuantityPicker.dll"
+if "$(ConfigurationName)" == "Debug" xcopy "$(TargetPath)" "$(SolutionDir)MODGEN"
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
