@@ -7,41 +7,21 @@ using UnityEngine.UI;
 
 namespace BetterSplitDialog.Dialog
 {
+    [HarmonyPatch(typeof(InventoryGui), "Awake")]
     [HarmonyPatch]
-    public class SplitDialogPatchJotunn
+    public class SplitDialogExtraButtonsPatch
     {
-        static MethodBase TargetMethod()
+        static void Postfix(InventoryGui __instance)
         {
-            return AccessTools.Method(typeof(InventoryGui), "ShowSplitDialog");
-        }
-
-        static void Postfix(
-            ref InventoryGui __instance,
-            ref ItemDrop.ItemData ___m_splitItem,
-            ref Inventory ___m_splitInventory,
-            ItemDrop.ItemData item, Inventory __1)
-        {
-            ___m_splitItem = item;
-            ___m_splitInventory = __1;
-
-            int totalStack = item.m_stack;
-
-            if (GameObject.Find("PickerButton1") != null)
-            {
-                updateButtons(___m_splitInventory, ___m_splitItem, item, totalStack);
-                return;
-            }
-
             Button copy = InventoryGui.instance.m_splitOkButton;
             Transform win_bkg = copy.transform.parent;
-            Button one = createButton(copy, "PickerButton1", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 177), 1);
-            Button pct20 = createButton(copy, "PickerButtonPct20", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 142), Mathf.CeilToInt((float)item.m_stack * 0.20f));
-            Button pct40 = createButton(copy, "PickerButtonPct40", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 107), Mathf.CeilToInt((float)item.m_stack * 0.40f));
-            Button pct60 = createButton(copy, "PickerButtonPct60", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 177), Mathf.CeilToInt((float)item.m_stack * 0.60f));
-            Button pct80 = createButton(copy, "PickerButtonPct80", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 142), Mathf.CeilToInt((float)item.m_stack * 0.80f));
-            Button pct100 = createButton(copy, "PickerButtonPct100", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 107), totalStack);
+            Button one = createButton(copy, "PickerButton1", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 177), 0);
+            Button pct20 = createButton(copy, "PickerButtonPct20", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 142), 0);
+            Button pct40 = createButton(copy, "PickerButtonPct40", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 107), 0);
+            Button pct60 = createButton(copy, "PickerButtonPct60", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 177), 0);
+            Button pct80 = createButton(copy, "PickerButtonPct80", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 142), 0);
+            Button pct100 = createButton(copy, "PickerButtonPct100", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 107), 0);
 
-            updateButtons(___m_splitInventory, ___m_splitItem, item, totalStack);
         }
 
         private static Button createButton(Button copy, string name, Transform parent, Vector2 sizeDetlta, Vector2 anchoredPosition, int quantity)
@@ -59,15 +39,38 @@ namespace BetterSplitDialog.Dialog
             Button newButton = newButtonObject.GetComponent<Button>();
             return newButton;
         }
+    }
 
-        private static void updateButtons(Inventory m_splitInventory, ItemDrop.ItemData m_splitItem, ItemDrop.ItemData item, int totalStack)
+    [HarmonyPatch]
+    public class SplitDialogExtraButtonsUpdatePatch
+    {
+        static MethodBase TargetMethod()
         {
-            updateTextAndEvent("PickerButton1", m_splitInventory, m_splitItem, 1);
-            updateTextAndEvent("PickerButtonPct20", m_splitInventory, m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.20f));
-            updateTextAndEvent("PickerButtonPct40", m_splitInventory, m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.40f));
-            updateTextAndEvent("PickerButtonPct60", m_splitInventory, m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.60f));
-            updateTextAndEvent("PickerButtonPct80", m_splitInventory, m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.80f));
-            updateTextAndEvent("PickerButtonPct100", m_splitInventory, m_splitItem, totalStack);
+            return AccessTools.Method(typeof(InventoryGui), "ShowSplitDialog");
+        }
+
+        static void Postfix(
+            ref InventoryGui __instance,
+            ref ItemDrop.ItemData ___m_splitItem,
+            ref Inventory ___m_splitInventory,
+            ItemDrop.ItemData item, Inventory __1)
+        {
+            if (GameObject.Find("PickerButton1") == null)
+            {
+                return;
+            }
+
+            ___m_splitItem = item;
+            ___m_splitInventory = __1;
+
+            int totalStack = item.m_stack;
+
+            updateTextAndEvent("PickerButton1", ___m_splitInventory, ___m_splitItem, 1);
+            updateTextAndEvent("PickerButtonPct20", ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.20f));
+            updateTextAndEvent("PickerButtonPct40", ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.40f));
+            updateTextAndEvent("PickerButtonPct60", ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.60f));
+            updateTextAndEvent("PickerButtonPct80", ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.80f));
+            updateTextAndEvent("PickerButtonPct100", ___m_splitInventory, ___m_splitItem, totalStack);
         }
         private static void updateTextAndEvent(string objectName, Inventory m_splitInventory, ItemDrop.ItemData m_splitItem, int newQuantity)
         {

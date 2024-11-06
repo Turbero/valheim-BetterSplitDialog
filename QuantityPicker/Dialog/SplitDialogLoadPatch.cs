@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using Jotunn.Managers;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,16 +7,13 @@ using UnityEngine.UI;
 
 namespace BetterSplitDialog.Dialog
 {
+
+    [HarmonyPatch(typeof(InventoryGui), "Awake")]
     [HarmonyPatch]
-    public class InputFieldPatch
+    public class SplitDialogLoadPatch
     {
         private static GameObject quantityInputField;
         public static bool InputFieldFocused = false;
-
-        static MethodBase TargetMethod()
-        {
-            return AccessTools.Method(typeof(InventoryGui), "ShowSplitDialog");
-        }
 
         static void Postfix(InventoryGui __instance)
         {
@@ -46,7 +42,6 @@ namespace BetterSplitDialog.Dialog
                 if (int.TryParse(quantityText, out int quantity))
                 {
                     InventoryGui.instance.m_splitSlider.value = Mathf.Clamp(quantity, 1, (int)InventoryGui.instance.m_splitSlider.maxValue);
-                    Debug.Log("Cantidad seleccionada: " + quantity);
                 }
                 InputFieldFocused = false;
             });
@@ -75,7 +70,7 @@ namespace BetterSplitDialog.Dialog
             titleObject.transform.SetParent(transformParent, false);
 
             TextMeshProUGUI titleText = titleObject.GetComponent<TextMeshProUGUI>();
-            titleText.text = $"{Localization.instance.Localize("$inventory_pickup")}...";
+            titleText.text = $"{"$inventory_pickup"}...";
             titleText.fontSize = 22;
             titleText.fontStyle = FontStyles.Normal;
             titleText.color = new Color(1f, 0.7176f, 0.3603f, 1f); //same as title
@@ -88,12 +83,12 @@ namespace BetterSplitDialog.Dialog
 
     // Controla el slider solo si el InputField no está activo
     [HarmonyPatch(typeof(InventoryGui), "Update")]      
-    public class InventoryGuiUpdateSplitInputFieldFocusPatch
+    public class InventoryGuiUpdateSplitDialogLoadPatch
     {
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            return !InputFieldPatch.InputFieldFocused;
+            return !SplitDialogLoadPatch.InputFieldFocused;
         }
     }
 }
