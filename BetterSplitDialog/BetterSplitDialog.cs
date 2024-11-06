@@ -8,7 +8,7 @@ namespace BetterSplitDialog
     {
         public const string GUID = "Turbero.BetterSplitDialog";
         public const string NAME = "Better SplitDialog";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.2";
 
         private Harmony harmony;
 

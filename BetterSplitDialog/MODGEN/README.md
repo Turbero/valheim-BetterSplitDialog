@@ -10,7 +10,7 @@ Mod to type exact amount and have more options on the split dialog when manipula
 
 [ESP]
 
-Mod para escribir exactactamente la cantidad a coger del stack de objetos y tener más opciones para partirlo directamente además del slider.
+Mod para escribir exactactamente la cantidad a coger del stack de objetos y tener mÃ¡s opciones para partirlo directamente ademÃ¡s del slider.
 
 ![](https://i.imgur.com/AlMSIPx.png)
 
@@ -35,10 +35,10 @@ For any concerns or doubts, find me in the Hijos de Freyja Team Discord or in my
 
 
 
-Si quieres disfrutar de este mod y muchos más, únete a la comunidad de Hijos de Freyja =) : https://discord.gg/hijos-de-freyja-818547021777993748
+Si quieres disfrutar de este mod y muchos mÃ¡s, Ãºnete a la comunidad de Hijos de Freyja =) : https://discord.gg/hijos-de-freyja-818547021777993748
 
-O pregúntame en mis canales personales:
+O pregÃºntame en mis canales personales:
 
 * Turbeheim: https://discord.gg/JKQR3EWRbU
-* Más Turbero: https://discord.gg/y67YeVw62K
+* MÃ¡s Turbero: https://discord.gg/y67YeVw62K
 
