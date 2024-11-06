@@ -7,8 +7,8 @@
     <ProjectGuid>{8A1DF304-05F0-44A3-9919-55AA56F614C1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuantityPicker</RootNamespace>
-    <AssemblyName>QuantityPicker</AssemblyName>
+    <RootNamespace>BetterSplitDialog</RootNamespace>
+    <AssemblyName>BetterSplitDialog</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\AppData\Roaming\Thunderstore Mod Manager\DataFolder\Valheim\profiles\Default\BepInEx\plugins\turbero-QuantityPicker\</OutputPath>
+    <OutputPath>..\..\..\..\AppData\Roaming\Thunderstore Mod Manager\DataFolder\Valheim\profiles\Default\BepInEx\plugins\turbero-BetterSplitDialog\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -116,7 +116,7 @@
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (powershell Compress-Archive -Path '$(SolutionDir)MODGEN\*' -DestinationPath '$(SolutionDir)MODGEN\$(ProjectName).zip' -Force)
 if "$(ConfigurationName)" == "Debug" del "$(TargetPath).mdb"
 if "$(ConfigurationName)" == "Debug" "$(SolutionDir)..\pdb2mdb.exe" "$(TargetPath)"
-if "$(ConfigurationName)" == "Debug" del "$(SolutionDir)MODGEN\QuantityPicker.dll"
+if "$(ConfigurationName)" == "Debug" del "$(SolutionDir)MODGEN\BetterSplitDialog.dll"
 if "$(ConfigurationName)" == "Debug" xcopy "$(TargetPath)" "$(SolutionDir)MODGEN"
 </PostBuildEvent>
   </PropertyGroup>
