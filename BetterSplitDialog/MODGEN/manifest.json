@@ -1,6 +1,6 @@
 {
   "name": "BetterSplitDialog",
-  "version_number": "1.0.2",
+  "version_number": "1.0.3",
   "website_url": "https://github.com/Turbero/valheim-BetterSplitDialog",
   "description": "Mod to type exact amount and have more options on the split dialog when manipulating stacks in your inventory or chests.",
   "dependencies": [

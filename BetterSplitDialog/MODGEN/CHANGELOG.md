@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.0.3
+
+* Adding buttons for 50%, -1, +1, min and max below the slider (same as Enshrouded!)
+
 ## 1.0.2
 
 *  Just updating mod version files correctly
