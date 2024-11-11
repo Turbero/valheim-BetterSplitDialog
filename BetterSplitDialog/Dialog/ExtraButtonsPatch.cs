@@ -73,12 +73,9 @@ namespace BetterSplitDialog.Dialog
 
             int totalStack = item.m_stack;
 
-            //FIXME Reset value (not working yet)
-            InventoryGui.instance.m_splitPanel
-                .transform.Find("win_bkg")
-                .transform.Find("InputField (Legacy)")
-                .transform.Find("Text (Legacy)")
-            .GetComponent<Text>().text = "";
+            InputField component = SplitDialogLoadPatch.quantityInputField.GetComponent<InputField>();
+            component.text = ""; //Default empty
+            component.characterLimit = totalStack.ToString().Length; //max size of stack to choose
 
             //Update automatic buttons
             updateTextAndEvent("PickerButtonPct20",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.20f));
@@ -105,7 +102,6 @@ namespace BetterSplitDialog.Dialog
             {
                 if (btnText == null)
                 {
-                    //InventoryGui.instance.m_splitSlider.value = newQuantity;
                     //Mimic InventoryGui.OnSplitOk()
                     Type type = InventoryGui.instance.GetType();
                     MethodInfo privateMethod = type.GetMethod("SetupDragItem", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -121,8 +117,8 @@ namespace BetterSplitDialog.Dialog
                 }
                 else
                 {
-                    var slider = InventoryGui.instance.m_splitSlider;
                     //Change slider only
+                    var slider = InventoryGui.instance.m_splitSlider;
                     if (btnText == "Min")
                     {
                         slider.value = 1;

@@ -12,7 +12,7 @@ namespace BetterSplitDialog.Dialog
     [HarmonyPatch]
     public class SplitDialogLoadPatch
     {
-        private static GameObject quantityInputField;
+        public static GameObject quantityInputField;
         public static bool InputFieldFocused = false;
 
         static void Postfix(InventoryGui __instance)
