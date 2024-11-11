@@ -1,5 +1,11 @@
 ### CHANGELOG
 
+## 1.0.4
+
+* Cleaning input field when opening again with a new stack
+* Limiting the input value length according to the selected stack
+* Updating mod icon
+
 ## 1.0.3
 
 * Adding buttons for 50%, -1, +1, min and max below the slider (same as Enshrouded!)
