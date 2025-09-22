@@ -50,8 +50,7 @@
     <Reference Include="gui_framework">
       <HintPath>..\..\..\Libs\gui_framework.dll</HintPath>
     </Reference>
-    <Reference Include="Jotunn, Version=2.21.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Jotunn">
       <HintPath>..\..\..\Libs\Jotunn.dll</HintPath>
     </Reference>
     <Reference Include="System" />

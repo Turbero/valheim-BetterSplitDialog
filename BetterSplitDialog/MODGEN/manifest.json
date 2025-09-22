@@ -5,6 +5,6 @@
   "description": "Mod to type exact amount and have more options on the split dialog when manipulating stacks in your inventory or chests.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2202",
-    "ValheimModding-Jotunn-2.21.3"
+    "ValheimModding-Jotunn-2.26.1"
   ]
 }

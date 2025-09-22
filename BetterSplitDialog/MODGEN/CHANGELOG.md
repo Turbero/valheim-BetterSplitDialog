@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.0.5
+
+* Just bumping Jotunn version to the latest
+
 ## 1.0.4
 
 * Cleaning input field when opening again with a new stack
