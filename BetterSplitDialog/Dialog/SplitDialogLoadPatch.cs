@@ -64,24 +64,10 @@ namespace BetterSplitDialog.Dialog
             };
             deselectEntry.callback.AddListener((data) => { InputFieldFocused = false; });
             eventTrigger.triggers.Add(deselectEntry);
-
-            // Split quantity title
-            GameObject titleObject = new GameObject("SplitQuantityTitle", typeof(TextMeshProUGUI));
-            titleObject.transform.SetParent(transformParent, false);
-
-            TextMeshProUGUI titleText = titleObject.GetComponent<TextMeshProUGUI>();
-            titleText.text = $"{"$inventory_pickup"}...";
-            titleText.fontSize = 22;
-            titleText.fontStyle = FontStyles.Normal;
-            titleText.color = new Color(1f, 0.7176f, 0.3603f, 1f); //same as title
-            titleText.alignment = TextAlignmentOptions.Center;
-
-            RectTransform titleRect = titleObject.GetComponent<RectTransform>();
-            titleRect.anchoredPosition = new Vector2(110, 50);
         }
     }
 
-    // Controla el slider solo si el InputField no está activo
+    // Control slider if the InputField is not active
     [HarmonyPatch(typeof(InventoryGui), "Update")]      
     public class InventoryGuiUpdateSplitDialogLoadPatch
     {
