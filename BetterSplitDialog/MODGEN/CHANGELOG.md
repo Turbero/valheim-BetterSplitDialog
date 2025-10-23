@@ -1,5 +1,10 @@
 ### CHANGELOG
 
+## 1.0.6
+
+* Removing repeated 20% 40% 60% 80% buttons for small stacks
+* Updating Jotunn and BepInEx dependencies
+
 ## 1.0.5
 
 * Just bumping Jotunn version to the latest
