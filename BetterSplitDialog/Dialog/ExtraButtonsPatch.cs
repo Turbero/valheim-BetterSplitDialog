@@ -77,11 +77,20 @@ namespace BetterSplitDialog.Dialog
             component.text = ""; //Default empty
             component.characterLimit = totalStack.ToString().Length; //max size of stack to choose
 
+            // Adjustments for small stacks to avoid repetition
+            Transform baseTransform = InventoryGui.instance.transform.Find("root/SplitDialog/win_bkg");
+            baseTransform.Find("PickerButtonPct40").gameObject.SetActive(item.m_stack != 2);
+            baseTransform.Find("PickerButtonPct60").gameObject.SetActive(item.m_stack != 3);
+            baseTransform.Find("PickerButtonPct80").gameObject.SetActive(item.m_stack != 2);
+
             //Update automatic buttons
             updateTextAndEvent("PickerButtonPct20",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.20f));
-            updateTextAndEvent("PickerButtonPct40",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.40f));
-            updateTextAndEvent("PickerButtonPct60",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.60f));
-            updateTextAndEvent("PickerButtonPct80",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.80f));
+            if (baseTransform.Find("PickerButtonPct40").gameObject.activeSelf)
+                updateTextAndEvent("PickerButtonPct40",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.40f));
+            if (baseTransform.Find("PickerButtonPct60").gameObject.activeSelf)
+                updateTextAndEvent("PickerButtonPct60",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.60f));
+            if (baseTransform.Find("PickerButtonPct80").gameObject.activeSelf)
+                updateTextAndEvent("PickerButtonPct80",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.80f));
             
             updateTextAndEvent("PickerButtonPctMin", ___m_splitInventory, ___m_splitItem, 1, "Min");
             updateTextAndEvent("PickerButtonPctMinus1", ___m_splitInventory, ___m_splitItem, ((int)totalStack / 2) - 1, "-1");
