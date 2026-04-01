@@ -38,7 +38,9 @@ namespace BetterSplitDialog.Dialog
         {
             GameObject newButtonObject = GameObject.Instantiate(copy.gameObject, parent);
             newButtonObject.name = name;
-            ControllerUtils.BindGamePad(newButtonObject.transform, hintGamepad, hintGamepadAnchoredPosition, InventoryGui.instance);
+            if (hintGamepad != KeyCode.Alpha0) {
+                ControllerUtils.BindGamePad(newButtonObject.transform, hintGamepad, hintGamepadAnchoredPosition, InventoryGui.instance);
+            }
 
             RectTransform newButtonRect = newButtonObject.GetComponent<RectTransform>();
             newButtonRect.sizeDelta = sizeDelta;
@@ -80,11 +82,14 @@ namespace BetterSplitDialog.Dialog
             component.text = ""; //Default empty
             component.characterLimit = totalStack.ToString().Length; //max size of stack to choose
 
-            // Adjustments for small stacks to avoid repetition
+            // Adjustments for small stacks to avoid repetition and other conflicts
             Transform baseTransform = InventoryGui.instance.transform.Find("root/SplitDialog/win_bkg");
-            baseTransform.Find("PickerButtonPct40").gameObject.SetActive(item.m_stack != 2);
-            baseTransform.Find("PickerButtonPct60").gameObject.SetActive(item.m_stack != 3);
-            baseTransform.Find("PickerButtonPct80").gameObject.SetActive(item.m_stack != 2);
+            bool currencyPocketInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Azumatt.CurrencyPocket");
+            baseTransform.Find("PickerButton1").gameObject.SetActive(false);
+            baseTransform.Find("PickerButtonPct20").gameObject.SetActive(!currencyPocketInstalled);
+            baseTransform.Find("PickerButtonPct40").gameObject.SetActive(item.m_stack != 2 && !currencyPocketInstalled);
+            baseTransform.Find("PickerButtonPct60").gameObject.SetActive(item.m_stack != 3 && !currencyPocketInstalled);
+            baseTransform.Find("PickerButtonPct80").gameObject.SetActive(item.m_stack != 2 && !currencyPocketInstalled);
 
             //Update automatic buttons
             updateTextAndEvent("PickerButtonPct20",  ___m_splitInventory, ___m_splitItem, Mathf.CeilToInt((float)item.m_stack * 0.20f));
@@ -101,12 +106,13 @@ namespace BetterSplitDialog.Dialog
             updateTextAndEvent("PickerButtonPctPlus1", ___m_splitInventory, ___m_splitItem, ((int)totalStack / 2) + 1, "+1");
             updateTextAndEvent("PickerButtonPctMax", ___m_splitInventory, ___m_splitItem, totalStack, "Max");
         }
-        private static void updateTextAndEvent(string objectName, Inventory m_splitInventory, ItemDrop.ItemData m_splitItem, int newQuantity, string btnText = null)
+        private static void updateTextAndEvent(string objectName, Inventory m_splitInventory, ItemDrop.ItemData m_splitItem, int amountToPick, string btnText = null)
         {
             GameObject buttonObject = GameObject.Find(objectName);
+            if (buttonObject == null) return;
 
             TMP_Text buttonText = buttonObject.GetComponentInChildren<TMP_Text>();
-            buttonText.text = btnText ?? newQuantity.ToString();
+            buttonText.text = btnText ?? amountToPick.ToString();
 
             Button newButton = buttonObject.GetComponent<Button>();
             newButton.onClick = new Button.ButtonClickedEvent();
@@ -117,7 +123,7 @@ namespace BetterSplitDialog.Dialog
                     //Mimic InventoryGui.OnSplitOk()
                     Type type = InventoryGui.instance.GetType();
                     MethodInfo privateMethod = type.GetMethod("SetupDragItem", BindingFlags.NonPublic | BindingFlags.Instance);
-                    privateMethod?.Invoke(InventoryGui.instance, new object[] { m_splitItem, m_splitInventory, newQuantity });
+                    privateMethod?.Invoke(InventoryGui.instance, new object[] { m_splitItem, m_splitInventory, amountToPick });
 
                     FieldInfo attributeSplitItem = type.GetField("m_splitItem", BindingFlags.NonPublic | BindingFlags.Instance);
                     attributeSplitItem?.SetValue(InventoryGui.instance, null);
