@@ -6,9 +6,9 @@ namespace BetterSplitDialog
     [BepInPlugin(GUID, NAME, VERSION)]
     public class BetterSplitDialog : BaseUnityPlugin
     {
-        public const string GUID = "Turbero.BetterSplitDialog";
-        public const string NAME = "Better SplitDialog";
-        public const string VERSION = "1.0.6";
+        private const string GUID = "Turbero.BetterSplitDialog";
+        private const string NAME = "Better SplitDialog";
+        private const string VERSION = "1.1.0";
 
         private Harmony harmony;
 

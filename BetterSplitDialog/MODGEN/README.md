@@ -14,6 +14,8 @@ All mods: https://thunderstore.io/c/valheim/p/turbero/
 
 STEAM: https://steamcommunity.com/id/turbero
 
-For any concerns or doubts, please dm me or open tickets in my github repos.
+Ko-fi: https://ko-fi.com/turbero
+
+For any concerns or doubts, please dm me, open tickets in my GitHub repos or click on the image below for my Discord.
 
 <a href="https://discord.gg/y67YeVw62K"><img src="https://i.imgur.com/A9b3EGB.png"></a>

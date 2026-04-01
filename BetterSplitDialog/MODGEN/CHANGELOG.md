@@ -1,5 +1,12 @@
 ### CHANGELOG
 
+## 1.1.0
+
+* Adding controller support to split dialog
+* Slightly moved quick buttons with fixed amounts to avoid hiding split yellow value in the split dialog
+* Fixed exploit with CurrencyPocket mod to duplicate money by hiding quick buttons from the dialog when installed
+* Updating Jotunn library to current latest
+
 ## 1.0.6
 
 * Removing repeated 20% 40% 60% 80% buttons for small stacks
