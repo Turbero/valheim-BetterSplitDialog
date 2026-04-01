@@ -15,8 +15,8 @@ namespace BetterSplitDialog.Dialog
         {
             Button copy = InventoryGui.instance.m_splitOkButton;
             Transform win_bkg = copy.transform.parent;
-            Button one   = createButton(copy, "PickerButton1",     win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 170), KeyCode.Alpha0, Vector2.zero); //will be hidden by Pct20 but avoids errors
-            Button pct20 = createButton(copy, "PickerButtonPct20", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 170), KeyCode.JoystickButton14,new Vector2(-22, 22));
+            Button one   = createButton(copy, "PickerButton1",     win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 170), KeyCode.Alpha0, new Vector2(-22, 22)); //will be hidden by Pct20 but avoids errors
+            Button pct20 = createButton(copy, "PickerButtonPct20", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 170), KeyCode.JoystickButton14, new Vector2(-22, 22));
             Button pct40 = createButton(copy, "PickerButtonPct40", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 134), KeyCode.JoystickButton8, new Vector2(-22, -22));
             Button pct60 = createButton(copy, "PickerButtonPct60", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 170), KeyCode.JoystickButton13, new Vector2(-22, 22));
             Button pct80 = createButton(copy, "PickerButtonPct80", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 134), KeyCode.JoystickButton9, new Vector2(-22, -22));
@@ -38,9 +38,7 @@ namespace BetterSplitDialog.Dialog
         {
             GameObject newButtonObject = GameObject.Instantiate(copy.gameObject, parent);
             newButtonObject.name = name;
-            if (hintGamepad != KeyCode.Alpha0) {
-                ControllerUtils.BindGamePad(newButtonObject.transform, hintGamepad, hintGamepadAnchoredPosition, InventoryGui.instance);
-            }
+            ControllerUtils.BindGamePad(newButtonObject.transform, hintGamepad, hintGamepadAnchoredPosition, InventoryGui.instance);
 
             RectTransform newButtonRect = newButtonObject.GetComponent<RectTransform>();
             newButtonRect.sizeDelta = sizeDelta;
@@ -85,7 +83,6 @@ namespace BetterSplitDialog.Dialog
             // Adjustments for small stacks to avoid repetition and other conflicts
             Transform baseTransform = InventoryGui.instance.transform.Find("root/SplitDialog/win_bkg");
             bool currencyPocketInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Azumatt.CurrencyPocket");
-            baseTransform.Find("PickerButton1").gameObject.SetActive(false);
             baseTransform.Find("PickerButtonPct20").gameObject.SetActive(!currencyPocketInstalled);
             baseTransform.Find("PickerButtonPct40").gameObject.SetActive(item.m_stack != 2 && !currencyPocketInstalled);
             baseTransform.Find("PickerButtonPct60").gameObject.SetActive(item.m_stack != 3 && !currencyPocketInstalled);
