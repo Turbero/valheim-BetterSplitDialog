@@ -15,34 +15,37 @@ namespace BetterSplitDialog.Dialog
         {
             Button copy = InventoryGui.instance.m_splitOkButton;
             Transform win_bkg = copy.transform.parent;
-            Button one   = createButton(copy, "PickerButton1",     win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 160), 0); //will be hidden by Pct20 but avoids errors
-            Button pct20 = createButton(copy, "PickerButtonPct20", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 160), 0);
-            Button pct40 = createButton(copy, "PickerButtonPct40", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 124), 0);
-            Button pct60 = createButton(copy, "PickerButtonPct60", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 160), 0);
-            Button pct80 = createButton(copy, "PickerButtonPct80", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 124), 0);
+            Button one   = createButton(copy, "PickerButton1",     win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 170), KeyCode.Alpha0, Vector2.zero); //will be hidden by Pct20 but avoids errors
+            Button pct20 = createButton(copy, "PickerButtonPct20", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 170), KeyCode.JoystickButton14,new Vector2(-22, 22));
+            Button pct40 = createButton(copy, "PickerButtonPct40", win_bkg.transform, new Vector2(50, 35), new Vector2(-120, 134), KeyCode.JoystickButton8, new Vector2(-22, -22));
+            Button pct60 = createButton(copy, "PickerButtonPct60", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 170), KeyCode.JoystickButton13, new Vector2(-22, 22));
+            Button pct80 = createButton(copy, "PickerButtonPct80", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 134), KeyCode.JoystickButton9, new Vector2(-22, -22));
             
-            Button pctMin = createButton(copy, "PickerButtonPctMin", win_bkg.transform, new Vector2(50, 35), new Vector2(-100, 58), 0);
-            Button pctMinus1 = createButton(copy, "PickerButtonPctMinus1", win_bkg.transform, new Vector2(50, 35), new Vector2(-50, 58), 0);
-            Button pct50 = createButton(copy, "PickerButtonPct50", win_bkg.transform, new Vector2(50, 35), new Vector2(0, 58), 0);
-            Button pctPlus1 = createButton(copy, "PickerButtonPctPlus1", win_bkg.transform, new Vector2(50, 35), new Vector2(50, 58), 0);
-            Button pctMax = createButton(copy, "PickerButtonPctMax", win_bkg.transform, new Vector2(50, 35), new Vector2(100, 58), 0);
+            Button pctMin = createButton(copy, "PickerButtonPctMin", win_bkg.transform, new Vector2(50, 35), new Vector2(-100, 58), KeyCode.JoystickButton6, new Vector2(-22, -22));
+            Button pctMinus1 = createButton(copy, "PickerButtonPctMinus1", win_bkg.transform, new Vector2(50, 35), new Vector2(-50, 58), KeyCode.JoystickButton10, new Vector2(-22, -22));
+            Button pct50 = createButton(copy, "PickerButtonPct50", win_bkg.transform, new Vector2(50, 35), new Vector2(0, 58), KeyCode.JoystickButton2, new Vector2(0, -22));
+            Button pctPlus1 = createButton(copy, "PickerButtonPctPlus1", win_bkg.transform, new Vector2(50, 35), new Vector2(50, 58), KeyCode.JoystickButton11, new Vector2(22, -22));
+            Button pctMax = createButton(copy, "PickerButtonPctMax", win_bkg.transform, new Vector2(50, 35), new Vector2(100, 58), KeyCode.JoystickButton7, new Vector2(22, -22));
 
             //Move cancel/ok
             (InventoryGui.instance.m_splitCancelButton.transform as RectTransform).anchoredPosition = new Vector2(-90, 16);
+            ControllerUtils.BindGamePad(InventoryGui.instance.m_splitCancelButton.transform, KeyCode.JoystickButton1, new Vector2(-75, 20), InventoryGui.instance);
             (InventoryGui.instance.m_splitOkButton.transform as RectTransform).anchoredPosition = new Vector2(90, 16);
+            ControllerUtils.BindGamePad(InventoryGui.instance.m_splitOkButton.transform, KeyCode.JoystickButton0, new Vector2(75, 20), InventoryGui.instance);
         }
 
-        private static Button createButton(Button copy, string name, Transform parent, Vector2 sizeDetlta, Vector2 anchoredPosition, int quantity)
+        private static Button createButton(Button copy, string name, Transform parent, Vector2 sizeDelta, Vector2 anchoredPosition, KeyCode hintGamepad, Vector2 hintGamepadAnchoredPosition)
         {
             GameObject newButtonObject = GameObject.Instantiate(copy.gameObject, parent);
             newButtonObject.name = name;
+            ControllerUtils.BindGamePad(newButtonObject.transform, hintGamepad, hintGamepadAnchoredPosition, InventoryGui.instance);
 
             RectTransform newButtonRect = newButtonObject.GetComponent<RectTransform>();
-            newButtonRect.sizeDelta = sizeDetlta;
+            newButtonRect.sizeDelta = sizeDelta;
             newButtonRect.anchoredPosition = anchoredPosition;
 
             TMP_Text buttonText = newButtonObject.GetComponentInChildren<TMP_Text>();
-            buttonText.text = quantity.ToString();
+            buttonText.text = "0";
 
             Button newButton = newButtonObject.GetComponent<Button>();
             return newButton;
@@ -71,7 +74,7 @@ namespace BetterSplitDialog.Dialog
             ___m_splitItem = item;
             ___m_splitInventory = __1;
 
-            int totalStack = item.m_stack;
+            var totalStack = item.m_stack;
 
             InputField component = SplitDialogLoadPatch.quantityInputField.GetComponent<InputField>();
             component.text = ""; //Default empty
@@ -103,7 +106,7 @@ namespace BetterSplitDialog.Dialog
             GameObject buttonObject = GameObject.Find(objectName);
 
             TMP_Text buttonText = buttonObject.GetComponentInChildren<TMP_Text>();
-            buttonText.text = btnText != null ? btnText : newQuantity.ToString();
+            buttonText.text = btnText ?? newQuantity.ToString();
 
             Button newButton = buttonObject.GetComponent<Button>();
             newButton.onClick = new Button.ButtonClickedEvent();
@@ -114,13 +117,13 @@ namespace BetterSplitDialog.Dialog
                     //Mimic InventoryGui.OnSplitOk()
                     Type type = InventoryGui.instance.GetType();
                     MethodInfo privateMethod = type.GetMethod("SetupDragItem", BindingFlags.NonPublic | BindingFlags.Instance);
-                    privateMethod.Invoke(InventoryGui.instance, new object[] { m_splitItem, m_splitInventory, newQuantity });
+                    privateMethod?.Invoke(InventoryGui.instance, new object[] { m_splitItem, m_splitInventory, newQuantity });
 
                     FieldInfo attributeSplitItem = type.GetField("m_splitItem", BindingFlags.NonPublic | BindingFlags.Instance);
-                    attributeSplitItem.SetValue(InventoryGui.instance, null);
+                    attributeSplitItem?.SetValue(InventoryGui.instance, null);
 
                     FieldInfo attributeSplitInventory = type.GetField("m_splitInventory", BindingFlags.NonPublic | BindingFlags.Instance);
-                    attributeSplitInventory.SetValue(InventoryGui.instance, null);
+                    attributeSplitInventory?.SetValue(InventoryGui.instance, null);
 
                     InventoryGui.instance.m_splitPanel.gameObject.SetActive(value: false);
                 }
@@ -132,7 +135,7 @@ namespace BetterSplitDialog.Dialog
                     {
                         slider.value = 1;
                     }
-                    else if (btnText == "-1")
+                    else if (btnText == "-1" && SplitDialogLoadPatch.InputFieldFocused) //let slider change naturally without button action
                     {
                         slider.value = Math.Max(slider.value - 1, 1);
                     }
@@ -140,7 +143,7 @@ namespace BetterSplitDialog.Dialog
                     {
                         slider.value = (int)Math.Floor((slider.maxValue / 2) + 0.5f);
                     }
-                    else if (btnText == "+1")
+                    else if (btnText == "+1" && SplitDialogLoadPatch.InputFieldFocused) //let slider change naturally without button action
                     {
                         slider.value = Math.Min(slider.value + 1, slider.maxValue);
                     }
