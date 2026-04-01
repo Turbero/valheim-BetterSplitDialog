@@ -21,11 +21,11 @@ namespace BetterSplitDialog.Dialog
             Button pct60 = createButton(copy, "PickerButtonPct60", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 170), KeyCode.JoystickButton13, new Vector2(-22, 22));
             Button pct80 = createButton(copy, "PickerButtonPct80", win_bkg.transform, new Vector2(50, 35), new Vector2(-65, 134), KeyCode.JoystickButton9, new Vector2(-22, -22));
             
-            Button pctMin = createButton(copy, "PickerButtonPctMin", win_bkg.transform, new Vector2(50, 35), new Vector2(-100, 58), KeyCode.JoystickButton6, new Vector2(-22, -22));
-            Button pctMinus1 = createButton(copy, "PickerButtonPctMinus1", win_bkg.transform, new Vector2(50, 35), new Vector2(-50, 58), KeyCode.JoystickButton10, new Vector2(-22, -22));
+            Button pctMax = createButton(copy, "PickerButtonPctMax", win_bkg.transform, new Vector2(50, 35), new Vector2(100, 58), KeyCode.JoystickButton11, new Vector2(22, -22));
+            Button pctPlus1 = createButton(copy, "PickerButtonPctPlus1", win_bkg.transform, new Vector2(50, 35), new Vector2(50, 58), KeyCode.JoystickButton7, new Vector2(22, -22));
             Button pct50 = createButton(copy, "PickerButtonPct50", win_bkg.transform, new Vector2(50, 35), new Vector2(0, 58), KeyCode.JoystickButton2, new Vector2(0, -22));
-            Button pctPlus1 = createButton(copy, "PickerButtonPctPlus1", win_bkg.transform, new Vector2(50, 35), new Vector2(50, 58), KeyCode.JoystickButton11, new Vector2(22, -22));
-            Button pctMax = createButton(copy, "PickerButtonPctMax", win_bkg.transform, new Vector2(50, 35), new Vector2(100, 58), KeyCode.JoystickButton7, new Vector2(22, -22));
+            Button pctMin = createButton(copy, "PickerButtonPctMin", win_bkg.transform, new Vector2(50, 35), new Vector2(-100, 58), KeyCode.JoystickButton10, new Vector2(-22, -22));
+            Button pctMinus1 = createButton(copy, "PickerButtonPctMinus1", win_bkg.transform, new Vector2(50, 35), new Vector2(-50, 58), KeyCode.JoystickButton6, new Vector2(-22, -22));
 
             //Move cancel/ok
             (InventoryGui.instance.m_splitCancelButton.transform as RectTransform).anchoredPosition = new Vector2(-90, 16);
@@ -135,7 +135,7 @@ namespace BetterSplitDialog.Dialog
                     {
                         slider.value = 1;
                     }
-                    else if (btnText == "-1" && SplitDialogLoadPatch.InputFieldFocused) //let slider change naturally without button action
+                    else if (btnText == "-1")
                     {
                         slider.value = Math.Max(slider.value - 1, 1);
                     }
@@ -143,7 +143,7 @@ namespace BetterSplitDialog.Dialog
                     {
                         slider.value = (int)Math.Floor((slider.maxValue / 2) + 0.5f);
                     }
-                    else if (btnText == "+1" && SplitDialogLoadPatch.InputFieldFocused) //let slider change naturally without button action
+                    else if (btnText == "+1")
                     {
                         slider.value = Math.Min(slider.value + 1, slider.maxValue);
                     }
